@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 
 import Box from "../../component/box";
 import PostContent from "../../component/post-content";
@@ -75,12 +75,34 @@ export default function Container({ id, username, text, date }) {
   const [isOpen, setOpen] = useState(false);
 
   const handleOpen = () => {
-    if (status === null) {
-      getData();
-    }
+    // if (status === null) {
+    //   getData();
+    // }
 
     setOpen(!isOpen);
   };
+
+  // useEffect(() => {
+  //   // alert(isOpen);
+
+  //   if (isOpen === true) {
+  //     alert(isOpen);
+  //   }
+  // }, [isOpen]);
+
+  // useEffect(() => {
+  //   // alert(isOpen);
+
+  //   if (isOpen === true && status === null) {
+  //     getData();
+  //   }
+  // }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen === true) {
+      getData();
+    }
+  }, [isOpen]);
 
   return (
     <Box style={{ padding: "0" }}>

@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 
 import Title from "../../component/title";
 import Grid from "../../component/grid";
@@ -9,6 +9,8 @@ import PostCreate from "../post-create";
 import { Alert, Skeleton, LOAD_STATUS } from "../../component/load";
 
 import { getDate } from "../util/getDate";
+// import { useWindowListener } from "../../App";
+import { useWindowListener } from "../util/useWindowListener";
 
 export default function Container() {
   const [status, setStatus] = useState(null);
@@ -47,9 +49,36 @@ export default function Container() {
     isEmpty: raw.list.length === 0,
   });
 
-  if (status === null) {
+  useEffect(() => {
+    // alert("render");
     getData();
-  }
+
+    const intervalId = setInterval(() => getData(), 5000);
+
+    // alert(1);
+
+    // setInterval(() => alert(123), 5000);
+
+    // const intervalId = setInterval(() => alert(123), 5000);
+
+    // alert(1);
+
+    return () => {
+      // alert(1);
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  useWindowListener("pointermove", (e) => {
+    setPosition({ x: e.clientX, y: e.clentY });
+  });
+
+  // if (status === null) {
+  //   getData();
+  // }
+
   return (
     <Grid>
       <Box>
